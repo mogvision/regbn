@@ -15,6 +15,6 @@ This repository is the official implementation of **[RegBN: Batch Normalization 
 
 A NeurIPS 2023 Paper--([link](https://neurips.cc/virtual/2023/poster/70500))
 
-Project ([link](https://mogvision.github.io/RegBN/)
+Project ([link](https://mogvision.github.io/RegBN/))
 
 Coming soon...
