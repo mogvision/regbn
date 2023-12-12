@@ -18,26 +18,29 @@ A NeurIPS 2023 Paper ([link](https://neurips.cc/virtual/2023/poster/70500))
 Project ([link](https://mogvision.github.io/RegBN/))
 
 RegBN facilitates the training of deep multimodal models while ensuring the
-prediction of reliable results with following features:
+prediction of reliable results with the following features:
 * As a normalization module, RegBN can be integrated into multimodal models of any
 architecture such as multilayer perceptrons (MLPs), convolutional neural networks (CNNs),
 vision transformers (ViTs), and other architectures.
-* RegBN possesses the capability to be applied to a vast array of heterogeneous data types,
+* It possesses the capability to be applied to a vast array of heterogeneous data types,
 encompassing text, tabular, audio, image, video, depth, and 3D MRI.
-* RegBN can be applied to any data/feature structure and remoce unuseful dependency and confoudnign effects in your models!
+* It can be applied to any data/feature structure, removing dependency and confusing effects in your models!
 
 
-###An example
+#### An example
+
 Here, RegBN is employed in [PMR](https://openaccess.thecvf.com/content/CVPR2023/papers/Fan_PMR_Prototypical_Modal_Rebalance_for_Multimodal_Learning_CVPR_2023_paper.pdf) as an example method, designed to address the "modality imbalance" issue and enhance the overall performance of Multimodal Learning (MML).
 
-![]<img src="docs/loss_modality.png" width="320px"/> 
-![]<img src="docs/acc_modality.png" width="320px"/> 
+<p float="center">
+  <img src="docs/loss_modality.png" width="320px"/> 
+  <img src="docs/acc_modality.png" width="320px"/> > 
+</p>
 
-> RegBN eliminates confounders and dependencies among multimodal data, enabling a MML model to converge more effectively!
+> RegBN eliminates confounders and dependencies among multimodal data, enabling an MML model to converge more effectively!
 
 RegBN code does not contain any extra modules and can be directly used in a standard torch model:
 
-####Python　
+#### Python　
 
 ```python
 import torch
@@ -48,22 +51,22 @@ f = torch.rand([batchSize, 512])
 g= torch.rand([batchSize,  64, 7, 7])
 
 kwargs = {
-                'gpu': 0,
-                'f_num_channels': 512, 
-                'g_num_channels': 64,
-                'f_layer_dim': [],
-                'g_layer_dim':[7, 7],
-                'normalize_input': True,
-                'normalize_output': True,
-                'affine': True,
-                'sigma_THR': 0.0, 
-                'sigma_MIN': 0.0, 
-                }
+        'gpu': 0,
+        'f_num_channels': 512, 
+        'g_num_channels': 64,
+        'f_layer_dim': [],
+        'g_layer_dim':[7, 7],
+        'normalize_input': True,
+        'normalize_output': True,
+        'affine': True,
+        'sigma_THR': 0.0, 
+        'sigma_MIN': 0.0, 
+}
 
 regbn_module = RegBN(**kwargs).to(device)
 print(regbn_module)
 
-# during triaing
+# during training
 epoch = 10
 steps_per_epoch = 100 # number of batches, len(dataloader)
 kwargs_train = {"is_training": True, 'n_epoch': epoch, 'steps_per_epoch': steps_per_epoch}
@@ -89,11 +92,11 @@ python PMR.py --epochs 75 --learning_rate 0.001  --gpu 0 --train  --batch_size 5
 ```
 
 
-####Few Points
-* RegBN, as multimodal normalisation method, can be employed with various types of feature maps. Simply specify the size and feature dimensions in the input.
+#### Few Points
+* RegBN, as a multimodal normalization method, can be employed with various types of feature maps. Simply specify the size and feature dimensions in the input.
 *  RegBN can be employed as long as its inputs are not mutually independent.
-* To optimize the performance of RegBN, it's advisable to choose a sensible number of channels. For instance, using feature maps with 512 channels for raw MNIST data of size [28, 28] may be considered impractical (Singulairty thread!).
-* Presently, RegBN is designed to work with a single GPU. This is due to the `torch.optim.LBFGS` which do not supprt multiple GPUS right now.
+* To optimize the performance of RegBN, it's advisable to choose a sensible number of channels. For instance, using feature maps with 512 channels for raw MNIST data of size [28, 28] may be considered impractical (Singularity thread!).
+* Presently, RegBN is designed to work with a single GPU. This is due to the `torch.optim.LBFGS` which do not support multiple GPUS right now.
 * RegBN, like other normalization techniques, can be used multiple times in neural networks. RegBN acts as an independence-promoting layer, so utilizing it multiple times in a row does not substantially alter the feature maps. For a pair of modalities, it is advised to employ RegBN once as a multimodal normalizer within various fusion paradigms. 
 * It is important to highlight that in the context of layer fusion (Figure 4c), where RegBN is employed multiple times, the input feature maps at each instance differ from one another.
 
@@ -119,4 +122,4 @@ If you use RegBN for your research, please cite the following work:
 ```
 
 ### Acknowledgements
-The example PMR code  is built upon [PMR](https://github.com/fanyunfeng-bit/Modal-Imbalance-PMR). Please refer to officail webpage of the technique for more details. 
+The example PMR code  is built upon [PMR](https://github.com/fanyunfeng-bit/Modal-Imbalance-PMR). Please refer to official webpage of the technique for more details. 
