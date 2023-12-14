@@ -35,7 +35,7 @@ class CGMNISTDataset(Dataset):
 
         # download color minist data from https://drive.google.com/file/d/11K-GmFD5cg3_KTtyBRkj9VBEnHl-hx_Q/view
         # and then locate it at `data/Mnist/colored_mnist`
-        data_dic = np.load('data/Mnist/colored_mnist/mnist_10color_jitter_var_%.03f.npy' % 0.030,
+        data_dic = np.load('data/Mnist/colored_mnist/mnist_10color_jitter_var_%.03f.npy' % 0.020,
                            encoding='latin1', allow_pickle=True).item()
 
         if self.mode == 'train':
